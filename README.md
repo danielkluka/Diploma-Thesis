@@ -1,4 +1,4 @@
-\mainpage Introduction of Diploma Thesis, Author Daniel Kluka, MSc (Ing.)
+Introduction of Diploma Thesis, Author Daniel Kluka, MSc (Ing.)
 
 ## Assignment
 ### Objectives which should be achieved:
@@ -24,6 +24,6 @@ KLUKA, Daniel. Design of a secure data transmission system in NB-IoT environment
 KLUKA, Daniel. Design of a secure data transmission system in NB-IoT environment. Online, master's Thesis. Petr MUSIL (supervisor). Brno: Brno University of Technology, Faculty of Electrical Engineering and Communication, 2025. Available at: https://www.vut.cz/en/students/final-thesis/detail/167301. [accessed 2025-05-27].
 
 ---
-$Id: Introduction.md 3 2025-05-27 03:31:00Z danielkluka $
+$Id: Introduction.md 3 2025-06-12 17:48:00Z danielkluka $
 
-Poslední změna: $Date: 2025-05-27$
+Poslední změna: $Date: 2025-06-12$
