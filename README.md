@@ -1,4 +1,4 @@
-\mainpage Introduction of Diploma Thesis, Author Bc. Daniel Kluka
+\mainpage Introduction of Diploma Thesis, Author Daniel Kluka, MSc (Ing.)
 
 ## Assignment
 ### Objectives which should be achieved:
