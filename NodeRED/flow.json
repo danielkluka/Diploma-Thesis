@@ -1,0 +1,670 @@
+[
+    {
+        "id": "cc780d85ee4abbd9",
+        "type": "tab",
+        "label": "DKWS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fd4a0babb284f159",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "message",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "bd5d4fde7ce19f18",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "timestamped data",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "924556bc7aa61908",
+        "type": "influxdb out",
+        "z": "cc780d85ee4abbd9",
+        "influxdb": "6e391247985c32bb",
+        "name": "daniel.kluka",
+        "measurement": "weather_station",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "vut",
+        "bucket": "test_gauges",
+        "x": 1010,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "6854c66efc1f1bf2",
+        "type": "comment",
+        "z": "cc780d85ee4abbd9",
+        "name": "formatting message for influxdb database",
+        "info": "",
+        "x": 680,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6e4ed300b503f8c7",
+        "type": "comment",
+        "z": "cc780d85ee4abbd9",
+        "name": "data send to database",
+        "info": "",
+        "x": 1040,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "878e33a08ecf3286",
+        "type": "json",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 570,
+        "y": 160,
+        "wires": [
+            [
+                "72859310d90101b9"
+            ]
+        ]
+    },
+    {
+        "id": "72859310d90101b9",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "string",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "a764b6286011e1ed",
+        "type": "json",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 750,
+        "y": 160,
+        "wires": [
+            [
+                "cb114a00fab48d96"
+            ]
+        ]
+    },
+    {
+        "id": "cb114a00fab48d96",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "string 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "8b1ff5251a2d0181",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "test",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e5fa499abb6d8f84",
+        "type": "function",
+        "z": "cc780d85ee4abbd9",
+        "name": "formatting",
+        "func": "let inputData = msg.payload;\n\nif (!Array.isArray(inputData)) {\n    inputData = [inputData];\n}\n\nlet msgs = [];\n\nfor (let i = 0; i < inputData.length; i++) {\n    let measurement = { ...inputData[i] };\n\n    let stringData = JSON.stringify(measurement);\n    let sizeInBytes = Buffer.byteLength(stringData, \"utf-8\");\n    measurement.sizeInBytes = sizeInBytes;\n\n    let timeVal = measurement.Ts + 7200;\n    delete measurement.Ts;\n    measurement.time = timeVal;\n\n    let newMsg = { payload: measurement };\n\n    msgs.push(newMsg);\n}\n\nreturn [msgs];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 80,
+        "wires": [
+            [
+                "bd5d4fde7ce19f18",
+                "a764b6286011e1ed",
+                "40a8371ea50b2250",
+                "7225b5931eba997f"
+            ]
+        ]
+    },
+    {
+        "id": "40a8371ea50b2250",
+        "type": "delay",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 780,
+        "y": 80,
+        "wires": [
+            [
+                "924556bc7aa61908",
+                "8b1ff5251a2d0181"
+            ]
+        ]
+    },
+    {
+        "id": "7225b5931eba997f",
+        "type": "function",
+        "z": "cc780d85ee4abbd9",
+        "name": "size",
+        "func": "// 1) Sériovo zapíšeme len payload do JSON reťazca\nlet stringData = JSON.stringify(msg.payload);\n\n// 2) Zistíme dĺžku tohto reťazca (v znakoch)\nlet sizeInChars = stringData.length;\n\n// 3) Prípadne, ak chceme skutočné byty v UTF-8, môžeme si pomôcť Buffer-om\nlet sizeInBytes = Buffer.byteLength(stringData, \"utf-8\");\n\n// Pre ukážku si vytvoríme nové vlastnosti v správe\nmsg.payloadSizeChars = sizeInChars;\nmsg.payloadSizeBytes = sizeInBytes;\n\n// Vrátime správu a v debugu uvidíme tieto nové hodnoty\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 200,
+        "wires": [
+            [
+                "fb78b33b8e42d35a"
+            ]
+        ]
+    },
+    {
+        "id": "d4b18476595ccfa4",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "string 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "fb78b33b8e42d35a",
+        "type": "json",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 870,
+        "y": 200,
+        "wires": [
+            [
+                "d4b18476595ccfa4"
+            ]
+        ]
+    },
+    {
+        "id": "bb9f09b581e8c292",
+        "type": "mqtt in",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "topic": "DKWS/TCP",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "4ea5fd2c6f711d4a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 80,
+        "wires": [
+            [
+                "fd4a0babb284f159",
+                "878e33a08ecf3286",
+                "e5fa499abb6d8f84"
+            ]
+        ]
+    },
+    {
+        "id": "1e631e1701cdb31c",
+        "type": "mqtt in",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "topic": "DKWS/TLS",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "7a49dbeecf305ca4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "0ef953f1fb875b84",
+                "db66524f91045c1e",
+                "b5835330dcfb0f70"
+            ]
+        ]
+    },
+    {
+        "id": "0ef953f1fb875b84",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "message",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f4c94fa6fbac0670",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "timestamped data",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "bbeed6fa0c138755",
+        "type": "influxdb out",
+        "z": "cc780d85ee4abbd9",
+        "influxdb": "6e391247985c32bb",
+        "name": "daniel.kluka",
+        "measurement": "weather_station",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "vut",
+        "bucket": "test_gauges",
+        "x": 1010,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5ee3548bef3d9a3c",
+        "type": "comment",
+        "z": "cc780d85ee4abbd9",
+        "name": "formatting message for influxdb database",
+        "info": "",
+        "x": 680,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "768de7b2a39e9240",
+        "type": "comment",
+        "z": "cc780d85ee4abbd9",
+        "name": "data send to database",
+        "info": "",
+        "x": 1040,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "db66524f91045c1e",
+        "type": "json",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "2bff4102899a5c27"
+            ]
+        ]
+    },
+    {
+        "id": "2bff4102899a5c27",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "string",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "1d00608acca70d38",
+        "type": "json",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 750,
+        "y": 400,
+        "wires": [
+            [
+                "d7f6895f27cd12ce"
+            ]
+        ]
+    },
+    {
+        "id": "d7f6895f27cd12ce",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "string 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "b62ae15acc8578da",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "test",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7efda28b45cba474",
+        "type": "delay",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 780,
+        "y": 320,
+        "wires": [
+            [
+                "bbeed6fa0c138755",
+                "b62ae15acc8578da"
+            ]
+        ]
+    },
+    {
+        "id": "6735a1aaaaf0a2d3",
+        "type": "function",
+        "z": "cc780d85ee4abbd9",
+        "name": "size",
+        "func": "// 1) Sériovo zapíšeme len payload do JSON reťazca\nlet stringData = JSON.stringify(msg.payload);\n\n// 2) Zistíme dĺžku tohto reťazca (v znakoch)\nlet sizeInChars = stringData.length;\n\n// 3) Prípadne, ak chceme skutočné byty v UTF-8, môžeme si pomôcť Buffer-om\nlet sizeInBytes = Buffer.byteLength(stringData, \"utf-8\");\n\n// Pre ukážku si vytvoríme nové vlastnosti v správe\nmsg.payloadSizeChars = sizeInChars;\nmsg.payloadSizeBytes = sizeInBytes;\n\n// Vrátime správu a v debugu uvidíme tieto nové hodnoty\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 440,
+        "wires": [
+            [
+                "ab1c8e4e75632472"
+            ]
+        ]
+    },
+    {
+        "id": "bd219a7a9f2869a7",
+        "type": "debug",
+        "z": "cc780d85ee4abbd9",
+        "name": "string 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "ab1c8e4e75632472",
+        "type": "json",
+        "z": "cc780d85ee4abbd9",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 870,
+        "y": 440,
+        "wires": [
+            [
+                "bd219a7a9f2869a7"
+            ]
+        ]
+    },
+    {
+        "id": "b5835330dcfb0f70",
+        "type": "function",
+        "z": "cc780d85ee4abbd9",
+        "name": "formatting",
+        "func": "let inputData = msg.payload;\n\nif (!Array.isArray(inputData)) {\n    inputData = [inputData];\n}\n\nlet msgs = [];\n\nfor (let i = 0; i < inputData.length; i++) {\n    let measurement = { ...inputData[i] };\n\n    let stringData = JSON.stringify(measurement);\n    let sizeInBytes = Buffer.byteLength(stringData, \"utf-8\");\n    measurement.sizeInBytes = sizeInBytes;\n\n    let timeVal = measurement.Ts + 7200;\n    delete measurement.Ts;\n    measurement.time = timeVal;\n\n    let newMsg = { payload: measurement };\n\n    msgs.push(newMsg);\n}\n\nreturn [msgs];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "7efda28b45cba474",
+                "f4c94fa6fbac0670",
+                "1d00608acca70d38",
+                "6735a1aaaaf0a2d3"
+            ]
+        ]
+    },
+    {
+        "id": "dd52178bef52d17e",
+        "type": "comment",
+        "z": "cc780d85ee4abbd9",
+        "name": "Non-encrypted communication",
+        "info": "",
+        "x": 340,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9d249385e1f3c042",
+        "type": "comment",
+        "z": "cc780d85ee4abbd9",
+        "name": "Encrypted communication",
+        "info": "",
+        "x": 350,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "6e391247985c32bb",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "203251",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.64.168:8087/",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "4ea5fd2c6f711d4a",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.64.166",
+        "port": "1883",
+        "tls": "98449312bcabb9bd",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7a49dbeecf305ca4",
+        "type": "mqtt-broker",
+        "name": "Mosquitto TLS",
+        "broker": "192.168.64.124",
+        "port": "8883",
+        "tls": "98449312bcabb9bd",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "98449312bcabb9bd",
+        "type": "tls-config",
+        "name": "DKWS Certificates",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "node-red.crt",
+        "keyname": "node-red.key",
+        "caname": "ca.crt",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    }
+]

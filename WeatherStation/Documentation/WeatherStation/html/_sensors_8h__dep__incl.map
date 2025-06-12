@@ -1,0 +1,7 @@
+<map id="Sensors.h" name="Sensors.h">
+<area shape="rect" id="Node000001" title="Sensors header." alt="" coords="71,5,151,33"/>
+<area shape="rect" id="Node000002" href="$_sensors_8cpp.html" title="Sensors functions source." alt="" coords="5,81,100,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,46,64,83,60,80,90,43"/>
+<area shape="rect" id="Node000003" href="$esp32s3_8ino.html" title="Main source of ESP32&#45;S3 DevKitC&#45;1 WROOM&#45;1 N16R8." alt="" coords="124,81,216,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,43,162,80,158,83,128,46"/>
+</map>

@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['wxt536serial_0',['WXT536Serial',['../esp32s3_8ino.html#aad439702c1f527818aac77407795208f',1,'esp32s3.ino']]],
+  ['wxtinitialize_1',['wxtInitialize',['../_sensors_8cpp.html#acbabea0a5908d5ce6c373721af16f968',1,'wxtInitialize(bool &amp;wxtInit, int &amp;WXT_RX, int &amp;WXT_TX, HardwareSerial &amp;WXT536Serial):&#160;Sensors.cpp'],['../_sensors_8h.html#acbabea0a5908d5ce6c373721af16f968',1,'wxtInitialize(bool &amp;wxtInit, int &amp;WXT_RX, int &amp;WXT_TX, HardwareSerial &amp;WXT536Serial):&#160;Sensors.cpp']]],
+  ['wxtmeasure_2',['wxtMeasure',['../_sensors_8cpp.html#a11e957551e69e8e390e4259d9b98a2ad',1,'wxtMeasure(HardwareSerial &amp;WXT536Serial, String &amp;receivedData, String &amp;completeMessage, float &amp;windDir, float &amp;windSp, float &amp;temp, float &amp;humi, float &amp;pres, float &amp;rain, float &amp;heaterT, float &amp;heaterV):&#160;Sensors.cpp'],['../_sensors_8h.html#a11e957551e69e8e390e4259d9b98a2ad',1,'wxtMeasure(HardwareSerial &amp;WXT536Serial, String &amp;receivedData, String &amp;completeMessage, float &amp;windDir, float &amp;windSp, float &amp;temp, float &amp;humi, float &amp;pres, float &amp;rain, float &amp;heaterT, float &amp;heaterV):&#160;Sensors.cpp']]]
+];
